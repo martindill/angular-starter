@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  ng:
+    build: 
+      context: .
+      dockerfile: dockerfiles/ng.dockerfile
+    volumes:
+      - ./src:/var/www/html
+    entrypoint: [ "ng" ]
+  server:
+    build: 
+      context: .
+      dockerfile: dockerfiles/server.dockerfile
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./src:/var/www/html
+  npm:
+    image: node:20
+    working_dir: /var/www/html
+    entrypoint: ["npm"]
+    volumes:
+      - ./src:/var/www/html
